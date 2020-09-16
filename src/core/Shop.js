@@ -66,8 +66,8 @@ const Shop = () => {
     };
 
     useEffect(() => {
-        // init();
-        // loadFilteredResults(skip, limit, myFilters.filters);
+        init();
+        loadFilteredResults(skip, limit, myFilters.filters);
     }, []);
 
     const handleFilters = (filters, filterBy) => {

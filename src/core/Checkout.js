@@ -33,7 +33,7 @@ const Checkout = ({ products, setRun = f => f, run = undefined }) => {
     };
 
     useEffect(() => {
-        // getToken(userId, token);
+        getToken(userId, token);
     }, []);
 
     const handleAddress = event => {

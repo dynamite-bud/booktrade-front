@@ -24,7 +24,7 @@ const Search = () => {
     };
 
     useEffect(() => {
-        // loadCategories();
+        loadCategories();
     }, []);
 
     const searchData = () => {

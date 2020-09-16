@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { createCategory } from "./apiAdmin";
 
 const AddCategory = () => {
+    const [categoryName, setCategoryName] = useState("");
     const [name, setName] = useState("");
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -28,6 +29,7 @@ const AddCategory = () => {
             } else {
                 setError("");
                 setSuccess(true);
+                setCategoryName(name);
             }
         });
     };
@@ -51,7 +53,7 @@ const AddCategory = () => {
 
     const showSuccess = () => {
         if (success) {
-            return <h3 className="text-success">{name} is created</h3>;
+            return <h3 className="text-success">{categoryName} is created</h3>;
         }
     };
 

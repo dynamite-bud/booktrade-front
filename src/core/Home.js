@@ -31,8 +31,8 @@ const Home = () => {
     };
 
     useEffect(() => {
-        // loadProductsByArrival();
-        // loadProductsBySell();
+        loadProductsByArrival();
+        loadProductsBySell();
     }, []);
 
     return (
