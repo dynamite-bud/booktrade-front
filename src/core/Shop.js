@@ -5,6 +5,7 @@ import { getCategories, getFilteredProducts } from "./apiCore";
 import Checkbox from "./Checkbox";
 import RadioBox from "./RadioBox";
 import { prices } from "./fixedPrices";
+// import {sortFilters} from "sortFilters";
 
 const Shop = () => {
     const [myFilters, setMyFilters] = useState({
@@ -16,6 +17,7 @@ const Shop = () => {
     const [skip, setSkip] = useState(0);
     const [size, setSize] = useState(0);
     const [filteredResults, setFilteredResults] = useState([]);
+    const [value, setValue] = useState(0);
 
     const init = () => {
         getCategories().then(data => {
@@ -74,7 +76,6 @@ const Shop = () => {
         // console.log("SHOP", filters, filterBy);
         const newFilters = { ...myFilters };
         newFilters.filters[filterBy] = filters;
-
         if (filterBy === "price") {
             let priceValues = handlePrice(filters);
             newFilters.filters[filterBy] = priceValues;
@@ -82,11 +83,10 @@ const Shop = () => {
         loadFilteredResults(myFilters.filters);
         setMyFilters(newFilters);
     };
-
+    
     const handlePrice = value => {
         const data = prices;
         let array = [];
-
         for (let key in data) {
             if (data[key]._id === parseInt(value)) {
                 array = data[key].array;
@@ -95,6 +95,64 @@ const Shop = () => {
         return array;
     };
 
+    const handleSortChange = event => {
+        let result=[];
+        if(event.target.value==='atoz' || event.target.value==='ztoa'){
+            result=handleLexSort(event.target.value);
+        }else if(event.target.value==='htol' || event.target.value==='ltoh'){
+            result=handlePriceSort(event.target.value);
+        }
+        setFilteredResults(result);
+        setSize(result);
+        setSkip(0);
+        setValue(event.target.value);
+    };
+
+    const handleLexSort = (order) =>{
+        const result=[...filteredResults];
+        result.sort(compare);
+        if(order==='ztoa'){
+            return result.reverse();
+        }
+        return result;
+    }
+    const handlePriceSort = (order) =>{
+        const result=[...filteredResults];
+        result.sort(comparePrice);
+        if(order==='htol'){
+            return result.reverse();
+        }
+        return result
+    }
+
+    function compare(a, b) {
+        // Use toUpperCase() to ignore character casing
+        const bookA = a.name.toUpperCase();
+        const bookB = b.name.toUpperCase();
+
+        let comparison = 0;
+        if (bookA > bookB) {
+          comparison = 1;
+        } else if (bookA < bookB) {
+          comparison = -1;
+        }
+        return comparison;
+      }
+    function comparePrice(a, b) {
+        // Use toUpperCase() to ignore character casing
+        const bookA = a.price;
+        const bookB = b.price;
+
+        let comparison = 0;
+        if (bookA > bookB) {
+          comparison = 1;
+        } else if (bookA < bookB) {
+          comparison = -1;
+        }
+        return comparison;
+      }
+
+    
     return (
         <Layout
             title="Shop Page"
@@ -102,7 +160,7 @@ const Shop = () => {
             className="container-fluid"
         >
             <div className="row">
-                <div className="col-4">
+                <div className="col-3">
                     <h4>Filter by categories</h4>
                     <ul>
                         <Checkbox
@@ -121,6 +179,50 @@ const Shop = () => {
                                 handleFilters(filters, "price")
                             }
                         />
+                    </div>
+                    
+                    <h4>Sort By:</h4>
+                    <div>
+                        <div>
+                        <input
+                            onChange={handleSortChange}
+                            type="radio"
+                            value="atoz"
+                            name="sortFilter"
+                            className="mr-2 ml-4"
+                        />
+                        <label className="form-check-label">A-Z</label>
+                        </div>
+                        <div>
+                        <input
+                            onChange={handleSortChange}
+                            type="radio"
+                            value="ztoa"
+                            name="sortFilter"
+                            className="mr-2 ml-4"
+                        />
+                        <label className="form-check-label">Z-A</label>
+                        </div>
+                        <div>
+                        <input
+                            onChange={handleSortChange}
+                            type="radio"
+                            value="htol"
+                            name="sortFilter"
+                            className="mr-2 ml-4"
+                        />
+                        <label className="form-check-label">$: High to Low</label>
+                        </div>
+                        <div>
+                        <input
+                            onChange={handleSortChange}
+                            type="radio"
+                            value="ltoh"
+                            name="sortFilter"
+                            className="mr-2 ml-4"
+                        />
+                        <label className="form-check-label">$: Low To High</label>
+                        </div>
                     </div>
                 </div>
 

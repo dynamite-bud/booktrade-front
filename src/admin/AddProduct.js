@@ -8,6 +8,11 @@ const AddProduct = () => {
     const [values, setValues] = useState({
         name: '',
         description: '',
+        author: '',
+        publisher: '',
+        pubYear: '',
+        isbn: '',
+        condition: '',
         price: '',
         categories: [],
         category: '',
@@ -25,6 +30,11 @@ const AddProduct = () => {
     const {
         name,
         description,
+        author,
+        publisher,
+        pubYear,
+        isbn,
+        condition,
         price,
         categories,
         category,
@@ -74,6 +84,11 @@ const AddProduct = () => {
                     ...values,
                     name: '',
                     description: '',
+                    author: '',
+                    publisher: '',
+                    pubYear: '',
+                    isbn: '',
+                    condition: '',
                     photo: '',
                     price: '',
                     quantity: '',
@@ -101,6 +116,31 @@ const AddProduct = () => {
             <div className="form-group">
                 <label className="text-muted">Description</label>
                 <textarea onChange={handleChange('description')} className="form-control" value={description} />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Condition</label>
+                <textarea onChange={handleChange('condition')} className="form-control" value={condition} />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Author</label>
+                <textarea onChange={handleChange('author')} className="form-control" value={author} />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Publisher</label>
+                <textarea onChange={handleChange('publisher')} className="form-control" value={publisher} />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">Publication Year</label>
+                <input onChange={handleChange('pubYear')} type="number" className="form-control" value={pubYear} />
+            </div>
+
+            <div className="form-group">
+                <label className="text-muted">ISBN</label>
+                <input onChange={handleChange('isbn')} type="number" className="form-control" value={isbn} />
             </div>
 
             <div className="form-group">

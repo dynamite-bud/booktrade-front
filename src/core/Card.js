@@ -98,7 +98,12 @@ const Card = ({
       <div className="card-body">
         {shouldRedirect(redirect)}
         <ShowImage item={product} url="product" />
-        <p className="card-p  mt-2">{product.description.substring(0, 100)} </p>
+        <p className="card-p  mt-2">Description: {product.description.substring(0, 100)} </p>
+        <p className="card-p  mt-2">Condition:   {!!product.condition && product.condition} </p>
+        <p className="card-p  mt-2">Author:      {!!product.author && product.author} </p>
+        <p className="card-p  mt-2">Publisher:   {!!product.publisher && product.publisher} </p>
+        <p className="card-p  mt-2">Publication Year: {!!product.pubYear && product.pubYear} </p>
+        <p className="card-p  mt-2">ISBN:        {!!product.isbn && product.isbn} </p>
         <p className="card-p black-10">$ {product.price}</p>
         <p className="black-9">Category: {product.category && product.category.name}</p>
         <p className="black-8">Added on {moment(product.createdAt).fromNow()}</p>
